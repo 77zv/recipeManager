@@ -14,3 +14,5 @@ enum class Unit {
 };
 
 std::string unitToString(Unit unit);
+
+double convertTo(double amount, Unit from, Unit to);
