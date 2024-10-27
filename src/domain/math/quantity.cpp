@@ -1,4 +1,4 @@
-#include "Quantity.hpp"
+#include "quantity.hpp"
 #include <stdexcept>
 
 Quantity::Quantity(double amount, Unit unit) : amount(amount), unit(unit) {

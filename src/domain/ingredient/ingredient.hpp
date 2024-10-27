@@ -1,5 +1,5 @@
 #pragma once
-#include "quantity.hpp"
+#include "../math/quantity.hpp"
 
 class Ingredient {
 private:

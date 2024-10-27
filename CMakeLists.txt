@@ -6,8 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
     src/main.cpp
-    src/domain/ingredient/unit.cpp
-    src/domain/ingredient/quantity.cpp
+    src/domain/math/unit.cpp
+    src/domain/math/quantity.cpp
     src/domain/ingredient/ingredient.cpp
     # src/domain/inventory/inventoryItem.cpp
     # src/domain/inventory/stock.cpp

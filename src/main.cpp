@@ -1,7 +1,7 @@
 #include <iostream>
 #include "domain/ingredient/ingredient.hpp"
-#include "domain/ingredient/quantity.hpp"
-#include "domain/ingredient/unit.hpp"
+#include "domain/math/quantity.hpp"
+#include "domain/math/unit.hpp"
 
 int main(int, char**){
 
