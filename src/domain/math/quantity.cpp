@@ -21,3 +21,21 @@ void Quantity::setAmount(double newAmount) {
     }
     amount = newAmount;
 }
+
+Quantity Quantity::operator+(const Quantity& other) const {
+    if (this->unit != other.unit) {
+        // Convert other to this unit
+        double convertedAmount = convertTo(other.amount, other.unit, this->unit);
+        return Quantity(this->amount + convertedAmount, this->unit);
+    }
+    return Quantity(this->amount + other.amount, this->unit);
+}
+
+Quantity Quantity::operator-(const Quantity& other) const {
+    if (this->unit != other.unit) {
+        // Convert other to this unit
+        double convertedAmount = convertTo(other.amount, other.unit, this->unit);
+        return Quantity(this->amount - convertedAmount, this->unit);
+    }
+    return Quantity(this->amount - other.amount, this->unit);
+}
