@@ -2,6 +2,7 @@
 #include "domain/ingredient/ingredient.hpp"
 #include "domain/math/quantity.hpp"
 #include "domain/math/unit.hpp"
+#include "domain/inventory/inventory_item.hpp"
 
 int main(int, char**){
 
@@ -9,7 +10,9 @@ int main(int, char**){
     Ingredient ingredient2("Sugar", Quantity(3, Unit::MILLILITERS));
 
     Quantity sum = ingredient.getQuantity() + ingredient2.getQuantity();
-    
+
+    InventoryItem inventoryItem(ingredient, ingredient.getQuantity());
+
     std::cout << sum.getAmount() << " " << unitToString(sum.getUnit()) << "\n";
 
     std::cout << ingredient.getName() << " " << ingredient.getQuantity().getAmount() << " " << unitToString(ingredient.getQuantity().getUnit()) << "\n";

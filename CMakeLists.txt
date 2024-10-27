@@ -9,8 +9,7 @@ set(SOURCES
     src/domain/math/unit.cpp
     src/domain/math/quantity.cpp
     src/domain/ingredient/ingredient.cpp
-    # src/domain/inventory/inventoryItem.cpp
-    # src/domain/inventory/stock.cpp
+    src/domain/inventory/inventory_item.cpp
     # src/domain/recipe/recipeStep.cpp
     # src/domain/recipe/recipe.cpp
 )
