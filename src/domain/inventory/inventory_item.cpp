@@ -1,6 +1,6 @@
 #include "inventory_item.hpp"
 
-InventoryItem::InventoryItem(Ingredient ingredient, Quantity quantity) : ingredient(ingredient), quantity(quantity) {}
+InventoryItem::InventoryItem(const Ingredient& ingredient, Quantity quantity) : ingredient(ingredient), quantity(quantity) {}
 
 Ingredient InventoryItem::getIngredient() const {
     return ingredient;

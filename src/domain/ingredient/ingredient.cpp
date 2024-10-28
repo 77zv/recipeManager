@@ -1,6 +1,6 @@
 #include "ingredient.hpp"
 
-Ingredient::Ingredient(std::string name, Quantity quantity) : name(name), quantity(quantity) {}
+Ingredient::Ingredient(const std::string&& name, Quantity quantity) : name(std::move(name)), quantity(quantity) {}
 
 std::string Ingredient::getName() const {
     return name;

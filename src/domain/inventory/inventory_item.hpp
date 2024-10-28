@@ -7,7 +7,7 @@ private:
     Quantity quantity;
 
 public:
-    InventoryItem(Ingredient ingredient, Quantity quantity);
+    InventoryItem(const Ingredient& ingredient, Quantity quantity);
     Ingredient getIngredient() const;
     Quantity getQuantity() const;
     void setQuantity(Quantity quantity);

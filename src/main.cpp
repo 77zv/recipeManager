@@ -5,9 +5,14 @@
 #include "domain/inventory/inventory_item.hpp"
 
 int main(int, char**){
+    std::string flour = "Flour";
+    std::string sugar = "Sugar";
 
-    Ingredient ingredient("Flour", Quantity(1, Unit::LITERS));
-    Ingredient ingredient2("Sugar", Quantity(3, Unit::MILLILITERS));
+    Quantity quantity(1, Unit::LITERS);
+    Quantity quantity2(3, Unit::MILLILITERS);
+
+    Ingredient ingredient(std::move(flour), quantity);
+    Ingredient ingredient2(std::move(sugar), quantity2);
 
     Quantity sum = ingredient.getQuantity() + ingredient2.getQuantity();
 

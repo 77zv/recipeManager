@@ -7,7 +7,7 @@ private:
     Quantity quantity;
 
 public:
-    Ingredient(std::string name, Quantity quantity);
+    Ingredient(const std::string&& name, Quantity quantity);
     std::string getName() const;
     Quantity getQuantity() const;
     void setQuantity(Quantity quantity);
