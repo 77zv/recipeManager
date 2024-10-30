@@ -1,14 +1,11 @@
 #pragma once
-#include "../math/quantity.hpp"
+#include <string>
 
 class Ingredient {
 private:
     std::string name;
-    Quantity quantity;
 
 public:
-    Ingredient(const std::string&& name, Quantity quantity);
+    explicit Ingredient(std::string name);
     std::string getName() const;
-    Quantity getQuantity() const;
-    void setQuantity(Quantity quantity);
 };
