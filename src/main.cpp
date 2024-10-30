@@ -4,23 +4,19 @@
 #include "domain/math/unit.hpp"
 #include "domain/inventory/inventory_item.hpp"
 
-int main(int, char**){
-    std::string flour = "Flour";
-    std::string sugar = "Sugar";
+int main(int, char**) {
+    Ingredient flour("Flour");
+    Ingredient sugar("Sugar");
 
     Quantity quantity(1, Unit::LITERS);
     Quantity quantity2(3, Unit::MILLILITERS);
 
-    Ingredient ingredient(std::move(flour), quantity);
-    Ingredient ingredient2(std::move(sugar), quantity2);
+    InventoryItem flourStock(flour, quantity);
+    InventoryItem sugarStock(sugar, quantity2);
 
-    Quantity sum = ingredient.getQuantity() + ingredient2.getQuantity();
-
-    InventoryItem inventoryItem(ingredient, ingredient.getQuantity());
-
-    std::cout << sum.getAmount() << " " << unitToString(sum.getUnit()) << "\n";
-
-    std::cout << ingredient.getName() << " " << ingredient.getQuantity().getAmount() << " " << unitToString(ingredient.getQuantity().getUnit()) << "\n";
+    std::cout << flourStock.getIngredient().getName() << " " 
+              << flourStock.getQuantity().getAmount() << " " 
+              << unitToString(flourStock.getQuantity().getUnit()) << "\n";
 
     std::cout << "Hello, from recipeManager!\n";
 }
