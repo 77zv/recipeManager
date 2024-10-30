@@ -21,7 +21,7 @@ set(SOURCES
     src/domain/inventory/inventory_item.cpp
     src/domain/recipe/recipe_step.cpp
     src/domain/recipe/recipe.cpp
-    # src/repository/sqlite/sqlite_ingredient_repository.cpp
+    src/repository/sqlite/sqlite_ingredient_repository.cpp
     # src/repository/sqlite/sqlite_inventory_repository.cpp
     # src/repository/sqlite/sqlite_recipe_repository.cpp
     # src/repository/sqlite/sqlite_step_ingredient_repository.cpp
