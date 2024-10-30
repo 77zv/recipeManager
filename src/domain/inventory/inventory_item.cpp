@@ -1,5 +1,6 @@
 #include "inventory_item.hpp"
 #include "../math/quantity.hpp"
+#include "../ingredient/ingredient.hpp"
 
 InventoryItem::InventoryItem(const Ingredient& ingredient, Quantity quantity) : ingredient(ingredient), quantity(quantity) {}
 

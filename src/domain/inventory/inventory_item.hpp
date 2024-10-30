@@ -1,5 +1,6 @@
 #pragma once
 #include "../ingredient/ingredient.hpp"
+#include "../math/quantity.hpp"
 
 class InventoryItem {
 private:
