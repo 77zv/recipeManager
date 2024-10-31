@@ -22,10 +22,9 @@ set(SOURCES
     src/domain/recipe/recipe_step.cpp
     src/domain/recipe/recipe.cpp
     src/repository/sqlite/sqlite_ingredient_repository.cpp
-    # src/repository/sqlite/sqlite_inventory_repository.cpp
-    # src/repository/sqlite/sqlite_recipe_repository.cpp
-    # src/repository/sqlite/sqlite_step_ingredient_repository.cpp
-    # src/repository/sqlite/sqlite_recipe_step_repository.cpp
+    src/repository/sqlite/sqlite_inventory_item_repository.cpp
+    src/repository/sqlite/sqlite_recipe_repository.cpp
+    src/repository/sqlite/sqlite_recipe_step_repository.cpp
     src/infrastructure/database/database_connection.cpp
 )
 
