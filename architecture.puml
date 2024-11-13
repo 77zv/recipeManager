@@ -1,0 +1,225 @@
+@startuml Architecture
+
+' Style settings
+skinparam classAttributeIconSize 0
+skinparam style strictuml
+skinparam linetype ortho
+
+' Domain Models
+package "Domain Models" {
+    class Ingredient {
+        -name: string
+        +getName(): string
+    }
+
+    class Recipe {
+        -name: string
+        -steps: vector<RecipeStep>
+        +getName(): string
+        +getSteps(): vector<RecipeStep>
+    }
+
+    class RecipeStep {
+        -stepNumber: int
+        -instruction: string
+        -quantity: optional<Quantity>
+        -ingredients: vector<Ingredient>
+        +getStepNumber(): int
+        +getInstruction(): string
+        +getQuantity(): optional<Quantity>
+        +getIngredients(): vector<Ingredient>
+        +setStepNumber(int)
+        +setInstruction(string)
+        +setQuantity(Quantity)
+        +setIngredients(vector<Ingredient>)
+    }
+
+    class InventoryItem {
+        -ingredient: Ingredient
+        -quantity: Quantity
+        +getIngredient(): Ingredient
+        +getQuantity(): Quantity
+        +setQuantity(Quantity)
+        +addQuantity(Quantity)
+        +removeQuantity(Quantity)
+    }
+
+    class Quantity {
+        -amount: double
+        -unit: Unit
+        +getAmount(): double
+        +getUnit(): Unit
+        +setAmount(double)
+        +operator+(Quantity): Quantity
+        +operator-(Quantity): Quantity
+    }
+
+    ' Proposed new domain models
+    class MealPlan {
+        -meals: vector<PlannedMeal>
+        -dateRange: DateRange
+        -servings: int
+    }
+
+    class PlannedMeal {
+        -recipe: Recipe
+        -scheduledTime: DateTime
+        -servings: int
+    }
+
+    class ShoppingList {
+        -items: vector<ShoppingItem>
+        +addItem()
+        +removeItem()
+        +optimize()
+    }
+}
+
+' Repositories
+package "Repositories" {
+    interface IRecipeRepository {
+        +save(Recipe)
+        +findByName(string): optional<Recipe>
+        +findAll(): vector<Recipe>
+        +update(Recipe)
+        +remove(string)
+    }
+
+    interface IIngredientRepository {
+        +save(Ingredient)
+        +findByName(string): optional<Ingredient>
+        +findAll(): vector<Ingredient>
+        +update(Ingredient)
+        +remove(string)
+    }
+
+    interface IInventoryItemRepository {
+        +save(InventoryItem)
+        +findByName(string): optional<InventoryItem>
+        +findAll(): vector<InventoryItem>
+        +update(InventoryItem)
+        +remove(string)
+    }
+
+    interface IRecipeStepRepository {
+        +save(string, RecipeStep)
+        +findByRecipeAndStepNumber(string, int): optional<RecipeStep>
+        +findAllByRecipe(string): vector<RecipeStep>
+        +update(string, RecipeStep)
+        +remove(string, int)
+        +removeAllFromRecipe(string)
+    }
+
+    interface IMealPlanningRepository {
+        +savePlan(MealPlan)
+        +getCurrentPlan(): optional<MealPlan>
+        +getHistoricalPlans(): vector<MealPlan>
+    }
+
+    interface IShoppingListRepository {
+        +saveList(ShoppingList)
+        +getCurrentList(): optional<ShoppingList>
+        +updateList(ShoppingList)
+    }
+}
+
+' SQLite Implementations
+package "SQLite Implementations" {
+    class SQLiteRecipeRepository {
+        -dbConn: DatabaseConnection
+    }
+
+    class SQLiteIngredientRepository {
+        -dbConn: DatabaseConnection
+    }
+
+    class SQLiteInventoryItemRepository {
+        -dbConn: DatabaseConnection
+    }
+
+    class SQLiteRecipeStepRepository {
+        -dbConn: DatabaseConnection
+    }
+}
+
+' Services
+package "Services" {
+    class RecipeService {
+        -recipeRepo: IRecipeRepository
+        -ingredientRepo: IIngredientRepository
+        +createRecipe(Recipe)
+        +updateRecipe(Recipe)
+        +deleteRecipe(string)
+        +getRecipe(string): optional<Recipe>
+        +getAllRecipes(): vector<Recipe>
+        +validateRecipe(Recipe): bool
+    }
+
+    class InventoryService {
+        -inventoryRepo: IInventoryItemRepository
+        -ingredientRepo: IIngredientRepository
+        +addToInventory(InventoryItem)
+        +removeFromInventory(string)
+        +updateQuantity(string, Quantity)
+        +checkAvailability(Ingredient, Quantity): bool
+        +listInventory(): vector<InventoryItem>
+    }
+
+    class ScraperService {
+        -strategy: IScraperStrategy
+        +scrapeRecipe(string): Recipe
+        +parseRecipeData(string): Recipe
+        +validateScrapedData(): bool
+    }
+
+    interface IScraperStrategy {
+        +scrapeRecipe(string): Recipe
+    }
+
+    class RecipeConverter {
+        +convertUnits(Recipe, Unit): Recipe
+        +scaleRecipe(Recipe, double): Recipe
+        +adjustServings(Recipe, int): Recipe
+    }
+
+    class MealPlanningService {
+        -recipeRepo: IRecipeRepository
+        -inventoryService: InventoryService
+        +createMealPlan(DateRange, int): MealPlan
+        +generateShoppingList(): ShoppingList
+        +optimizeIngredientUsage()
+    }
+}
+
+' Infrastructure
+package "Infrastructure" {
+    class DatabaseConnection {
+        -db: Database
+        -instance: DatabaseConnection
+        +getInstance(): DatabaseConnection
+        +getDatabase(): Database
+    }
+}
+
+' Relationships
+Recipe "1" *-- "*" RecipeStep
+RecipeStep "1" *-- "*" Ingredient
+RecipeStep "1" *-- "0..1" Quantity
+InventoryItem "1" *-- "1" Ingredient
+InventoryItem "1" *-- "1" Quantity
+MealPlan "1" *-- "*" PlannedMeal
+PlannedMeal "1" *-- "1" Recipe
+
+SQLiteRecipeRepository ..|> IRecipeRepository
+SQLiteIngredientRepository ..|> IIngredientRepository
+SQLiteInventoryItemRepository ..|> IInventoryItemRepository
+SQLiteRecipeStepRepository ..|> IRecipeStepRepository
+
+RecipeService --> IRecipeRepository
+RecipeService --> IIngredientRepository
+InventoryService --> IInventoryItemRepository
+InventoryService --> IIngredientRepository
+MealPlanningService --> RecipeService
+MealPlanningService --> InventoryService
+
+@enduml 
